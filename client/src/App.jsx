@@ -18,6 +18,9 @@ function App() {
          <div className="p-8">
       <HappinessData />
     </div>
+     <div className="bg-purple-600 text-white p-6 rounded-lg">
+      <h1 className="text-3xl font-bold">¡Tailwind funcionando bien!</h1>
+    </div>
       </div>
       <h1>Vite + React</h1>
       <div className="card">
