@@ -1,0 +1,17 @@
+.weather_info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.dataBox {
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  padding: 0.5rem 0.75rem; 
+  border-radius: 8px; 
+  background-color: rgba(0, 0, 0, 0.2); 
+  text-align: center;
+  white-space: nowrap; 
+}

@@ -1,0 +1,40 @@
+.githubButtonContainer {
+  background-color: #000;
+  transition: background-color 0.3s ease;
+  border-radius: 6px;
+  border: none;
+  width: 20%;
+  margin: 10px;
+}
+
+.githubButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.githubButton:hover {
+  background-color: #333;
+}
+
+.githubButton .githubIcon {
+  width: 25px;
+  height: 25px;
+  margin-right: 8px;
+}
+
+.githubButton span {
+  font-family: sans-serif;
+  font-size: 16px;
+}

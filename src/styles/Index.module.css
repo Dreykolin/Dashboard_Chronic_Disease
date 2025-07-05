@@ -1,0 +1,21 @@
+.pageContainer {
+  background-image: url("/background1.png");
+  background-size: cover;
+  background-position: top 70px right;
+  background-repeat: no-repeat;
+  
+  min-height: 100vh;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.screenWrapper{
+    align-content: center;
+}
+
+.genericButton{
+    
+}
