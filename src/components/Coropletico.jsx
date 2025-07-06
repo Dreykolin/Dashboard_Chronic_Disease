@@ -1,24 +1,46 @@
-import React, { useState, memo } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import { ComposableMap, Geographies, Geography, Sphere, Graticule } from 'react-simple-maps';
 import { scaleLinear } from 'd3-scale';
 import { Tooltip } from 'react-tooltip';
+import Papa from 'papaparse';
 import styles from '@/styles/Coropletico.module.css';
 
 const GEO_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
+const CSV_URL = '/WHO-Cardiovascular Disease/NCDMORT3070_v2.csv';
 
-const data = [
-    { ISO3: "ARG", name: "Argentina", value: 45 }, { ISO3: "BRA", name: "Brazil", value: 88 },
-    { ISO3: "USA", name: "United States", value: 95 }, { ISO3: "CAN", name: "Canada", value: 70 },
-    { ISO3: "MEX", name: "Mexico", value: 65 }, { ISO3: "ESP", name: "Spain", value: 78 },
-    { ISO3: "FRA", name: "France", value: 82 }, { ISO3: "DEU", name: "Germany", value: 85 },
-    { ISO3: "CHN", name: "China", value: 92 }, { ISO3: "IND", name: "India", value: 50 },
-    { ISO3: "RUS", name: "Russia", value: 60 }, { ISO3: "AUS", name: "Australia", value: 75 },
-    { ISO3: "ZAF", name: "South Africa", value: 40 },
-];
-
-const colorScale = scaleLinear().domain([0, 100]).range(["#ffedea", "#ff5233"]);
+const colorScale = scaleLinear().domain([10, 50]).range(["#ffedea", "#ff5233"]);
 
 const MapaCoropletico = ({ setTooltipContent }) => {
+    const [mapData, setMapData] = useState([]);
+    //acá se cargan los csv, aún hay que ver como se filtra y eso
+    useEffect(() => {
+        Papa.parse(CSV_URL, {
+            download: true,
+            header: true,
+            complete: (results) => {
+                const filteredData = results.data.filter(
+                    row => row.TimeDim === '2008' && row.Dim1 === 'SEX_MLE' //prueba
+                );
+
+                const transformedData = filteredData.map(row => ({ 
+                    name: row.CountryName,
+                    value: parseFloat(row.NumericValue)
+                })).filter(d => d.name && !isNaN(d.value));
+
+                setMapData(transformedData);
+            }
+        });
+    }, []);
+
+
+
+
+
+
+
+
+
+
     return (
         <ComposableMap
             projectionConfig={{ rotate: [-10, 0, 0], scale: 147 }}
@@ -29,29 +51,31 @@ const MapaCoropletico = ({ setTooltipContent }) => {
         >
             <Sphere stroke="#E4E5E6" strokeWidth={0.5} />
             <Graticule stroke="#E4E5E6" strokeWidth={0.5} />
-            <Geographies geography={GEO_URL}>
-                {({ geographies }) =>
-                    geographies.map((geo) => {
-                        const d = data.find((s) => s.name === geo.properties.name);
+            {mapData.length > 0 && (
+                <Geographies geography={GEO_URL}>
+                    {({ geographies }) =>
+                        geographies.map((geo) => {
+                            const d = mapData.find((s) => s.name === geo.properties.name);
 
-                        return (
-                            <Geography
-                                key={geo.rsmKey} geography={geo}
-                                fill={d ? colorScale(d.value) : "#F5F4F6"}
-                                stroke="#FFF" strokeWidth={0.5}
-                                className={styles.geography}
-                                onMouseEnter={() => {
-                                    const { name } = geo.properties;
-                                    const value = d ? `${d.value}%` : "Sin datos";
-                                    setTooltipContent(`${name} — ${value}`);
-                                }}
-                                onMouseLeave={() => setTooltipContent("")}
-                                data-tooltip-id="map-tooltip"
-                            />
-                        );
-                    })
-                }
-            </Geographies>
+                            return (
+                                <Geography
+                                    key={geo.rsmKey} geography={geo}
+                                    fill={d ? colorScale(d.value) : "#F5F4F6"}
+                                    stroke="#FFF" strokeWidth={0.5}
+                                    className={styles.geography}
+                                    onMouseEnter={() => {
+                                        const { name } = geo.properties;
+                                        const value = d ? `${d.value.toFixed(2)}%` : "Sin datos";
+                                        setTooltipContent(`${name} — ${value}`);
+                                    }}
+                                    onMouseLeave={() => setTooltipContent("")}
+                                    data-tooltip-id="map-tooltip"
+                                />
+                            );
+                        })
+                    }
+                </Geographies>
+            )}
         </ComposableMap>
     );
 };
