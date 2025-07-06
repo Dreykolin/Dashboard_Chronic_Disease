@@ -1,0 +1,8 @@
+NCD_BMI_30A	Prevalencia ajustada de obesidad	
+
+
+NCD_BMI_PLUS2A		Obesidad en niños/adolescentes (ajustada)	✅ Si analizás población joven
+EQ_OVERWEIGHTADULT	Sobrepeso y obesidad combinados	⚠️ Mezcla 2 condiciones distintas
+obesewm, bmi30wm	Solo mujeres no embarazadas, específico de encuestas	⚠️ Muy segmentado
+
+#están vacío los 3 de abajo :(, no hay datos públicos

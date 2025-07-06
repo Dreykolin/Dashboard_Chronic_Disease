@@ -1,0 +1,6 @@
+ Entonces, si querés hacer algo similar a lo de hipertensión, estos son los equivalentes:
+Concepto	Hipertensión	Diabetes
+Prevalencia (%)	NCD_HYP_PREVALENCE_A	NCD_DIABETES_PREVALENCE_AGESTD
+Diagnóstico (opcional)	NCD_HYP_DIAGNOSIS_A	No disponible globalmente
+Tratamiento (%)	NCD_HYP_TREATMENT_A	NCD_DIABETES_TREATMENT_AGESTD
+Control efectivo (%)	NCD_HYP_CONTROL_A	❌ No disponible aún

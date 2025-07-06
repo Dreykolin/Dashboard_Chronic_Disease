@@ -1,0 +1,7 @@
+NCDMORT3070
+
+    “Probability (%) of dying between age 30 and 70 from cardiovascular diseases, cancer, diabetes or chronic respiratory diseases”
+
+
+
+WHS2_161

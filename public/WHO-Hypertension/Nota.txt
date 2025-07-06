@@ -1,0 +1,28 @@
+NCD_HYP_PREVALENCE_A
+Está ajustado por edad, así que no penaliza a países con poblaciones mayores.
+Te dice qué porcentaje de adultos tiene hipertensión, sin depender del sistema de salud.
+A diferencia de indicadores de diagnóstico o tratamiento, no requiere que la persona sepa que la tiene.
+Es el indicador de referencia para evaluar el peso epidemiológico real de la hipertensión.
+
+
+CONTROL, TREATMENT	Reflejan el sistema de salud, no la prevalencia real.
+DIAGNOSIS, AWARENESS	Están sesgados por acceso a salud y conciencia pública.
+PREVALENCE_C (cruda)	No es comparable entre países con distintas pirámides poblacionales.
+
+
+
+
+Ejemplo Comparativo:
+país	NCD_HYP_PREVALENCE_A	AWARENESS	¿Interpretación?
+País A	38%	80%	Alta prevalencia pero buen control/diagnóstico
+
+Si quieres decir “estos países tienen más hipertensión que otros” de forma objetiva, usá NCD_HYP_PREVALENCE_A.
+
+
+
+
+Código	¿Qué te aporta?	Tipo
+NCD_HYP_DIAGNOSIS_A	Qué porcentaje de hipertensos fue diagnosticado	Cobertura diagnóstico
+NCD_HYP_TREATMENT_A	Qué porcentaje de diagnosticados recibe tratamiento farmacológico	Tratamiento
+NCD_HYP_CONTROL_A	Qué porcentaje de hipertensos tiene la presión efectivamente controlada	Control efectivo
+NCD_HYP_AWARENESS_A	Qué porcentaje sabe que tiene hipertensión	Conciencia pública

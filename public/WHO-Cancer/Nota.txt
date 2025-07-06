@@ -1,0 +1,41 @@
+ Indicadores con datos cuantitativos reales, desagregables por país y año:
+Código	¿Qué mide?	Tipo de dato	¿Sirve?
+1.SA_0000001420	DALYs por cáncer de colon y recto (ajustado)	DALYs	✅
+2.SA_0000001439	Tasa de mortalidad ajustada por cáncer de colon y recto	Mortalidad	✅
+3.SA_0000001445	Tasa de mortalidad ajustada por cáncer de hígado	Mortalidad	✅
+4.SA_0000001430	DALYs por cáncer de esófago	DALYs	✅
+5.SA_0000001448	Mortalidad ajustada por cáncer orofaríngeo	Mortalidad	✅
+6.SA_0000001419	DALYs por cáncer de mama	DALYs	✅
+7.SA_0000001438	Mortalidad ajustada por cáncer de mama	Mortalidad	✅
+8. ORAL_HEALTH_CANCER_LIPORALCAVITY_100K	Incidencia de cáncer oral/labial ajustada	Incidencia	✅
+
+1. 2004
+2. 2002, 2004
+3. 200, 2004
+4. 2004
+5. 2002, 2004
+6. 2002
+7. 2002, 2004
+8. 2020
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ "SA_0000001420": "dalys_colon",
+    "SA_0000001439": "mort_colon",
+    "SA_0000001445": "mort_higado",
+    "SA_0000001430": "dalys_esofago",
+    "SA_0000001448": "mort_orofaringe",
+    "SA_0000001419": "dalys_mama",
+    "SA_0000001438": "mort_mama",
+    "ORAL_HEALTH_CANCER_LIPORALCAVITY_100K": "incidencia_oral"
