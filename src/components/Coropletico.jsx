@@ -32,8 +32,6 @@ const MapaCoropletico = ({ setTooltipContent }) => {
             <Geographies geography={GEO_URL}>
                 {({ geographies }) =>
                     geographies.map((geo) => {
-                        // --- ÚNICO CAMBIO AQUÍ ---
-                        // Ahora busca por nombre en lugar de ISO_A3
                         const d = data.find((s) => s.name === geo.properties.name);
 
                         return (
@@ -43,7 +41,6 @@ const MapaCoropletico = ({ setTooltipContent }) => {
                                 stroke="#FFF" strokeWidth={0.5}
                                 className={styles.geography}
                                 onMouseEnter={() => {
-                                    // El nombre del tooltip se toma directamente del mapa (geo.properties.name)
                                     const { name } = geo.properties;
                                     const value = d ? `${d.value}%` : "Sin datos";
                                     setTooltipContent(`${name} — ${value}`);
