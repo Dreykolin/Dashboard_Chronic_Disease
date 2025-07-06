@@ -33,7 +33,7 @@ const MapaCoropletico = ({ setTooltipContent }) => {
       <Geographies geography={GEO_URL}>
         {({ geographies }) =>
           geographies.map((geo) => {
-            const d = data.find((s) => s.ISO3 === geo.properties.ISO_A3);
+            const d = data.find((s) => s.ISO3 === geo.properties.iso_a3);
             return (
               <Geography
                 key={geo.rsmKey} geography={geo}
@@ -41,9 +41,9 @@ const MapaCoropletico = ({ setTooltipContent }) => {
                 stroke="#FFF" strokeWidth={0.5}
                 className={styles.geography}
                 onMouseEnter={() => {
-                  const { NAME } = geo.properties;
+                  const { name } = geo.properties;
                   const value = d ? `${d.value}%` : "Sin datos";
-                  setTooltipContent(`${NAME} — ${value}`);
+                  setTooltipContent(`${name} — ${value}`);
                 }}
                 onMouseLeave={() => setTooltipContent("")}
                 data-tooltip-id="map-tooltip"
