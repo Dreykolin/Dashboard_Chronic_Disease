@@ -6,7 +6,7 @@ import Papa from 'papaparse';
 import styles from '@/styles/Coropletico.module.css';
 
 const GEO_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
-const CSV_URL = '/WHO-Cardiovascular Disease/NCDMORT3070_v2.csv';
+const CSV_URL = '/WHO-Cardiovascular Disease/NCDMORT3070_v3.csv';
 
 const colorScale = scaleLinear().domain([10, 50]).range(["#ffedea", "#ff5233"]);
 
