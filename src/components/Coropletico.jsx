@@ -33,7 +33,7 @@ const MapaCoropletico = ({ setTooltipContent }) => {
       <Geographies geography={GEO_URL}>
         {({ geographies }) =>
           geographies.map((geo) => {
-            const d = data.find((s) => s.ISO3 === geo.properties.iso_a3);
+            const d = data.find((s) => s.ISO3 === geo.properties.ISO_A3);
             return (
               <Geography
                 key={geo.rsmKey} geography={geo}
