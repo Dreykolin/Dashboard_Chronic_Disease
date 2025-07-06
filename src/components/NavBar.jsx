@@ -8,7 +8,7 @@ function NavBar() {
       <div className={styles.left}>
         <div className={styles.logo}>
           <FaChartBar size={24} color="#ff5233" />
-          <span>Dashboard VdD</span>
+          <span>Chronic Disease Super Dashboard</span>
         </div>
       </div>
       

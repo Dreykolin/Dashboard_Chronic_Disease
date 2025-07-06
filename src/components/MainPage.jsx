@@ -1,14 +1,47 @@
-import styles from '@/styles/MainPage.module.css';
-import Coropletico from '@/components/Coropletico';
+﻿import { useState } from 'react';
+import dynamic from 'next/dynamic';
+import { Tooltip } from 'react-tooltip';
+import styles from '@/styles/MainPage.module.css'; // Estilos de la página principal
 import NavBar from '@/components/NavBar';
+import FilterMenu from '@/components/FilterMenu'; // Importamos el menú separado
+
+// Cargamos el mapa de forma dinámica para evitar errores de hidratación
+const DynamicCoropletico = dynamic(
+    () => import('@/components/Coropletico'),
+    {
+        ssr: false,
+        loading: () => <p style={{ textAlign: 'center' }}>Cargando mapa...</p>
+    }
+);
 
 export default function MainPage() {
-  return (
-    <div> 
-      <NavBar />
-      <main className={styles.content}>
-        <Coropletico />
-      </main>
-    </div>
-  );
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [filters, setFilters] = useState({ year: '2019', sex: 'SEX_BTSX' });
+    const [tooltipContent, setTooltipContent] = useState("");
+
+    return (
+        <div>
+            <NavBar />
+
+            <button className={styles.filterButton} onClick={() => setIsMenuOpen(true)}>
+                ☰ Filtros
+            </button>
+
+            <FilterMenu
+                isOpen={isMenuOpen}
+                onClose={() => setIsMenuOpen(false)}
+                filters={filters}
+                onFilterChange={setFilters}
+            />
+
+            <main className={styles.content}>
+                <DynamicCoropletico
+                    filters={filters}
+                    setTooltipContent={setTooltipContent}
+                />
+            </main>
+
+            <Tooltip id="map-tooltip" content={tooltipContent} />
+        </div>
+    );
 }
