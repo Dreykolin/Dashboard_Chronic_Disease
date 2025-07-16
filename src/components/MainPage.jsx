@@ -9,50 +9,46 @@ import Statistics from './Statistics';
 
 // Cargamos el mapa de forma dinámica para evitar errores de hidratación
 const DynamicCoropletico = dynamic(
-    () => import('@/components/Coropletico'),
-    {
-        ssr: false,
-        loading: () => <p style={{ textAlign: 'center' }}>Cargando mapa...</p>
-    }
+  () => import('@/components/Coropletico'),
+  {
+    ssr: false,
+    loading: () => <p style={{ textAlign: 'center' }}>Cargando mapa...</p>
+  }
 );
 
 export default function MainPage() {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [filters, setFilters] = useState({ year: '2019', sex: 'SEX_BTSX' });
-    const [tooltipContent, setTooltipContent] = useState("");
-    const [activeTab, setActiveTab] = useState('Coropletico');
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [filters, setFilters] = useState({ year: '2019', sex: 'SEX_BTSX' });
+  const [tooltipContent, setTooltipContent] = useState("");
+  const [activeTab, setActiveTab] = useState('Coropletico');
 
-    return (
-        <div>
-            <NavBar setActiveTab={setActiveTab} activeTab={activeTab} /> {/* PASAMOS props */}
+  return (
+    <div>
+      <NavBar setActiveTab={setActiveTab} activeTab={activeTab} />
 
-            {activeTab === 'Coropletico' && (
-              <button className={styles.filterButton} onClick={() => setIsMenuOpen(true)}>
-                ☰ Filtros
-              </button>
-            )}
+      {activeTab === 'Coropletico' && (
+        <FilterMenu
+          isOpen={isMenuOpen}
+          onClose={() => setIsMenuOpen(false)}
+          filters={filters}
+          onFilterChange={setFilters}
+        />
+      )}
 
-            <FilterMenu
-                isOpen={isMenuOpen}
-                onClose={() => setIsMenuOpen(false)}
-                filters={filters}
-                onFilterChange={setFilters}
-            />
+      <main className={styles.content}>
+        {activeTab === 'Coropletico' && (
+          <DynamicCoropletico
+            filters={filters}
+            setFilters={setFilters}  // para actualizar el año desde el slider
+            setTooltipContent={setTooltipContent}
+          />
+        )}
 
-            <main className={styles.content}>
-              {activeTab === 'Coropletico' && (
-                <DynamicCoropletico
-                  filters={filters}
-                  setTooltipContent={setTooltipContent}
-                />
-              )}
+        {activeTab === 'Estadísticas' && <Statistics />}
+        {activeTab === 'Datos Crudos' && <RawDataTable />}
+      </main>
 
-              {activeTab === 'Estadísticas' && <Statistics />}
-          
-              {activeTab === 'Datos Crudos' && <RawDataTable />}
-            </main>
-            
-            <Tooltip id="map-tooltip" content={tooltipContent} />
-        </div>
-    );
+      <Tooltip id="map-tooltip" content={tooltipContent} />
+    </div>
+  );
 }
