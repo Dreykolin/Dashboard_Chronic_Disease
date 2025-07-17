@@ -28,15 +28,15 @@ function RawDataTable() {
 
   // Filtros únicos
   const years = useMemo(
-    () => ['Todos', ...new Set(data.map((d) => d.TimeDim))],
+    () => ['Todos', ...new Set(data.map((d) => d.year))],
     [data]
   );
   const sexes = useMemo(
-    () => ['Todos', ...new Set(data.map((d) => d.Dim1).filter(Boolean))],
+    () => ['Todos', ...new Set(data.map((d) => d.sex).filter(Boolean))],
     [data]
   );
   const diseases = useMemo(
-    () => ['Todos', ...new Set(data.map((d) => d.Disease))],
+    () => ['Todos', ...new Set(data.map((d) => d.disease))],
     [data]
   );
 
@@ -44,27 +44,27 @@ function RawDataTable() {
   useEffect(() => {
     let result = data;
     if (filters.year !== 'Todos') {
-      result = result.filter((r) => String(r.TimeDim) === String(filters.year));
+      result = result.filter((r) => String(r.year) === String(filters.year));
     }
     if (filters.sex !== 'Todos') {
-      result = result.filter((r) => r.Dim1 === filters.sex);
+      result = result.filter((r) => r.sex === filters.sex);
     }
     if (filters.disease !== 'Todos') {
-      result = result.filter((r) => r.Disease === filters.disease);
+      result = result.filter((r) => r.disease === filters.disease);
     }
     setFiltered(result);
   }, [filters, data]);
 
   const columns = useMemo(
     () => [
-      { Header: 'País', accessor: 'CountryName' },
-      { Header: 'Año', accessor: 'TimeDim' },
-      { Header: 'Sexo', accessor: 'Dim1' },
-      { Header: 'Enfermedad', accessor: 'Disease' },
-      { Header: 'Indicador', accessor: 'Indicator' },
+      { Header: 'País', accessor: 'country' },
+      { Header: 'Año', accessor: 'year' },
+      { Header: 'Sexo', accessor: 'sex' },
+      { Header: 'Enfermedad', accessor: 'disease' },
+      { Header: 'Indicador', accessor: 'indicator' },
       {
         Header: 'Valor (%)',
-        accessor: 'NumericValue',
+        accessor: 'value',
         sortType: 'basic',
       },
     ],

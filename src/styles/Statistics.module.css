@@ -30,3 +30,8 @@
   width: 300px;
   font-size: 0.95rem;
 }
+.reactSelect {
+    width: 300px;
+    font-size: 0.95rem;
+    z-index: 10;
+}

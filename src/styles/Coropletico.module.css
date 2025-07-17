@@ -1,87 +1,142 @@
 .dashboardContainer {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  background-color: #f8f9fa;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
+/* --- TÍTULO --- */
 .title {
-  color: #343a40;
-  margin-bottom: 0;
-  font-weight: 600;
+    color: #212529;
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin: 1.5rem 0 1rem;
+    letter-spacing: 0.5px;
+    text-align: center;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.08);
 }
 
+/* --- MAPA --- */
 .mapContainer {
-  width: 100%;
-  background-color: #212529;
-  position: relative; 
-  padding: 2rem 0;
+    width: 100%;
+    background-color: #212529;
+    padding: 1rem 0;
+}
+
+.map {
+    max-width: 100%;
+    margin: 0 auto;
 }
 
 .geography {
-  transition: fill 0.3s ease-in-out, transform 0.2s ease-in-out;
-  cursor: pointer;
-  outline: none;
+    transition: fill 0.3s ease-in-out, transform 0.2s ease-in-out;
+    cursor: pointer;
 }
 
-.geography:hover {
-  fill: #ff987f; 
-  transform: translateY(-2px);
-}
+    .geography:hover {
+        fill: #ff987f;
+        transform: translateY(-1px);
+    }
 
+/* --- TOOLTIP --- */
 .tooltip {
-  background-color: #212529 !important;
-  color: #ffffff !important;
-  border-radius: 6px !important;
-  padding: 8px 12px !important;
-  font-size: 14px !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-  opacity: 1 !important;
-  transition: opacity 0.2s ease-in-out;
+    background-color: #212529 !important;
+    color: #ffffff !important;
+    border-radius: 6px !important;
+    padding: 8px 12px !important;
+    font-size: 14px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    opacity: 1 !important;
 }
 
+/* --- SLIDER Y SELECT --- */
 .sliderContainer {
-  padding: 1rem;
+    max-width: 900px;
+    margin: 0 auto 1.5rem;
+    padding: 1rem 1.5rem;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 .label {
-  font-weight: bold;
-  margin-right: 1rem;
-}
-
-.slider {
-  margin: 0.5rem 0 1rem;
-  height: 25px;
-}
-
-.thumb {
-  height: 20px;
-  width: 20px;
-  background: #2c3e50;
-  border-radius: 50%;
-  cursor: grab;
-  top: -8px;
-}
-
-.track {
-  background: #bdc3c7;
-  height: 4px;
-}
-
-.mark {
-  font-size: 0.75rem;
-  color: #333;
-  margin-top: 4px;
-  position: absolute;
-  top: 20px;
-  text-align: center;
-  width: 40px;
-  transform: translateX(-50%);
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: #333;
 }
 
 .select {
-  margin-top: 1rem;
-  font-size: 1rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.95rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #fff;
+    width: 100%;
+    max-width: 250px;
+}
+
+.slider {
+    margin: 0.5rem 0 1rem;
+    height: 6px;
+    background: #ddd;
+    border-radius: 3px;
+}
+
+.thumb {
+    height: 16px;
+    width: 16px;
+    background: #2c3e50;
+    border-radius: 50%;
+    cursor: grab;
+    top: -5px;
+}
+
+.track {
+    background: #7f8c8d;
+    height: 6px;
+    border-radius: 3px;
+}
+
+.mark {
+    font-size: 0.7rem;
+    color: #666;
+    margin-top: 4px;
+    position: absolute;
+    top: 20px;
+    text-align: center;
+    width: 40px;
+    transform: translateX(-50%);
+}
+
+.toggleButton {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    margin: 1rem auto; /* ← ESTO LO CENTRA */
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+    .toggleButton:hover {
+        background-color: #f1f1f1;
+    }
+
+.arrow {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+.rotate {
+    transform: rotate(180deg);
 }
