@@ -7,6 +7,26 @@ import {
 } from 'react-table';
 import Select from 'react-select';
 
+const diseaseLabels = {
+  NCD_BMI_30A: "Obesidad (IMC ≥ 30)",
+  NCD_DIABETES_PREVALENCE_AGESTD: "Prevalencia de diabetes",
+  NCD_DIABETES_TREATMENT_AGESTD: "Tratamiento de diabetes",
+  NCD_HYP_PREVALENCE_A: "Prevalencia de hipertensión",
+  NCD_HYP_DIAGNOSIS_A: "Hipertensión diagnosticada",
+  NCD_HYP_TREATMENT_A: "Tratamiento de hipertensión",
+  NCD_HYP_CONTROL_A: "Hipertensión controlada",
+  NCDMORT3070: "Probabilidad de morir 30-70 años (ENT)",
+  SA_0000001419: "DALYs - cáncer de mama",
+  SA_0000001420: "DALYs - cáncer colorrectal",
+  SA_0000001430: "DALYs - cáncer de esófago",
+  SA_0000001438: "Mortalidad - cáncer de mama",
+  SA_0000001439: "Mortalidad - cáncer colorrectal",
+  SA_0000001445: "Mortalidad - cáncer de hígado",
+  SA_0000001448: "Mortalidad - cáncer orofaríngeo",
+  ORAL_HEALTH_CANCER_LIPORALCAVITY_100K: "Cáncer oral/labial"
+};
+
+
 const sexLabels = {
   SEX_FMLE: 'Mujeres',
   SEX_MLE: 'Hombres',
@@ -23,6 +43,7 @@ const RawDataTable = () => {
     disease: 'Todos',
     region: 'Todos',
     continent: 'Todos',
+    indicator: 'Todos',
   });
 
   useEffect(() => {
@@ -35,7 +56,7 @@ const RawDataTable = () => {
       });
   }, []);
 
-  const years = useMemo(() => ['Todos', ...new Set(data.map((d) => d.year))], [data]);
+  const years = useMemo(() => ['Todos', ...new Set(data.map((d) => d.year))].sort().reverse(), [data]);
   const sexes = useMemo(() => ['Todos', ...new Set(data.map((d) => d.sex).filter(Boolean))], [data]);
   const diseases = useMemo(() => ['Todos', ...new Set(data.map((d) => d.disease))], [data]);
   const regions = useMemo(() => ['Todos', ...new Set(data.map((d) => d.region).filter(Boolean))], [data]);
@@ -51,6 +72,9 @@ const RawDataTable = () => {
     }
     if (filters.disease !== 'Todos') {
       result = result.filter((r) => r.disease === filters.disease);
+    }
+    if (filters.indicator !== 'Todos') {
+      result = result.filter((r) => r.indicator === filters.indicator);
     }
     if (filters.region !== 'Todos') {
       result = result.filter((r) => r.region === filters.region);
@@ -71,7 +95,15 @@ const RawDataTable = () => {
         Cell: ({ value }) => sexLabels[value] || value,
       },
       { Header: 'Enfermedad', accessor: 'disease' },
-      { Header: 'Indicador', accessor: 'indicator' },
+      {
+        Header: 'Indicador',
+        accessor: 'indicator',
+        Cell: ({ value }) => (
+          <span title={diseaseLabels[value] || value}>
+            {value}
+          </span>
+        ),
+      },
       {
         Header: 'Valor (%)',
         accessor: 'value',
@@ -108,6 +140,25 @@ const RawDataTable = () => {
   );
 
   const { globalFilter, pageIndex } = state;
+
+  const indicatorsByDisease = useMemo(() => {
+    const map = {};
+    data.forEach((d) => {
+      if (!map[d.disease]) map[d.disease] = new Set();
+      if (d.indicator) map[d.disease].add(d.indicator);
+    });
+    // Convierte Set a Array
+    Object.keys(map).forEach((k) => map[k] = Array.from(map[k]));
+    return map;
+  }, [data]);
+
+  const indicators = useMemo(() => {
+    if (filters.disease !== 'Todos' && indicatorsByDisease[filters.disease]) {
+      return ['Todos', ...indicatorsByDisease[filters.disease]];
+    }
+    // Si no hay enfermedad seleccionada, muestra todos los indicadores únicos
+    return ['Todos', ...new Set(data.map((d) => d.indicator).filter(Boolean))];
+  }, [filters.disease, indicatorsByDisease, data]);
 
   if (loading) return <p style={{ textAlign: 'center' }}>Cargando datos...</p>;
 
@@ -149,6 +200,8 @@ const RawDataTable = () => {
           name: 'sex', options: sexes
         }, {
           name: 'disease', options: diseases
+        }, {
+          name: 'indicator', options: indicators
         }, {
           name: 'region', options: regions
         }, {
