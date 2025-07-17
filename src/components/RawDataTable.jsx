@@ -5,8 +5,15 @@ import {
   usePagination,
   useSortBy,
 } from 'react-table';
+import Select from 'react-select';
 
-function RawDataTable() {
+const sexLabels = {
+  SEX_FMLE: 'Mujeres',
+  SEX_MLE: 'Hombres',
+  SEX_BTSX: 'Ambos sexos',
+};
+
+const RawDataTable = () => {
   const [data, setData] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -14,6 +21,8 @@ function RawDataTable() {
     year: 'Todos',
     sex: 'Todos',
     disease: 'Todos',
+    region: 'Todos',
+    continent: 'Todos',
   });
 
   useEffect(() => {
@@ -26,21 +35,12 @@ function RawDataTable() {
       });
   }, []);
 
-  // Filtros únicos
-  const years = useMemo(
-    () => ['Todos', ...new Set(data.map((d) => d.year))],
-    [data]
-  );
-  const sexes = useMemo(
-    () => ['Todos', ...new Set(data.map((d) => d.sex).filter(Boolean))],
-    [data]
-  );
-  const diseases = useMemo(
-    () => ['Todos', ...new Set(data.map((d) => d.disease))],
-    [data]
-  );
+  const years = useMemo(() => ['Todos', ...new Set(data.map((d) => d.year))], [data]);
+  const sexes = useMemo(() => ['Todos', ...new Set(data.map((d) => d.sex).filter(Boolean))], [data]);
+  const diseases = useMemo(() => ['Todos', ...new Set(data.map((d) => d.disease))], [data]);
+  const regions = useMemo(() => ['Todos', ...new Set(data.map((d) => d.region).filter(Boolean))], [data]);
+  const continents = useMemo(() => ['Todos', ...new Set(data.map((d) => d.continent).filter(Boolean))], [data]);
 
-  // Aplicar filtros
   useEffect(() => {
     let result = data;
     if (filters.year !== 'Todos') {
@@ -52,6 +52,12 @@ function RawDataTable() {
     if (filters.disease !== 'Todos') {
       result = result.filter((r) => r.disease === filters.disease);
     }
+    if (filters.region !== 'Todos') {
+      result = result.filter((r) => r.region === filters.region);
+    }
+    if (filters.continent !== 'Todos') {
+      result = result.filter((r) => r.continent === filters.continent);
+    }
     setFiltered(result);
   }, [filters, data]);
 
@@ -59,7 +65,11 @@ function RawDataTable() {
     () => [
       { Header: 'País', accessor: 'country' },
       { Header: 'Año', accessor: 'year' },
-      { Header: 'Sexo', accessor: 'sex' },
+      {
+        Header: 'Sexo',
+        accessor: 'sex',
+        Cell: ({ value }) => sexLabels[value] || value,
+      },
       { Header: 'Enfermedad', accessor: 'disease' },
       { Header: 'Indicador', accessor: 'indicator' },
       {
@@ -67,6 +77,8 @@ function RawDataTable() {
         accessor: 'value',
         sortType: 'basic',
       },
+      { Header: 'Región', accessor: 'region' },
+      { Header: 'Continente', accessor: 'continent' },
     ],
     []
   );
@@ -99,9 +111,17 @@ function RawDataTable() {
 
   if (loading) return <p style={{ textAlign: 'center' }}>Cargando datos...</p>;
 
+  const styledSelect = {
+    control: (base) => ({
+      ...base,
+      minWidth: 180,
+      fontSize: '0.95rem',
+      zIndex: 5,
+    }),
+  };
+
   return (
     <div style={{ padding: '1rem' }}>
-      {/* Buscador global */}
       <input
         value={globalFilter || ''}
         onChange={(e) => setGlobalFilter(e.target.value)}
@@ -115,7 +135,6 @@ function RawDataTable() {
         }}
       />
 
-      {/* Filtros */}
       <div
         style={{
           display: 'flex',
@@ -124,41 +143,29 @@ function RawDataTable() {
           flexWrap: 'wrap',
         }}
       >
-        <select
-          value={filters.year}
-          onChange={(e) => setFilters({ ...filters, year: e.target.value })}
-        >
-          {years.map((y) => (
-            <option key={y} value={y}>
-              Año: {y}
-            </option>
-          ))}
-        </select>
-
-        <select
-          value={filters.sex}
-          onChange={(e) => setFilters({ ...filters, sex: e.target.value })}
-        >
-          {sexes.map((s) => (
-            <option key={s} value={s}>
-              Sexo: {s}
-            </option>
-          ))}
-        </select>
-
-        <select
-          value={filters.disease}
-          onChange={(e) => setFilters({ ...filters, disease: e.target.value })}
-        >
-          {diseases.map((d) => (
-            <option key={d} value={d}>
-              Enfermedad: {d}
-            </option>
-          ))}
-        </select>
+        {[{
+          name: 'year', options: years
+        }, {
+          name: 'sex', options: sexes
+        }, {
+          name: 'disease', options: diseases
+        }, {
+          name: 'region', options: regions
+        }, {
+          name: 'continent', options: continents
+        }].map(({ name, options }) => (
+          <Select
+            key={name}
+            styles={styledSelect}
+            options={options.map((v) => ({ value: v, label: v }))}
+            value={{ value: filters[name], label: filters[name] }}
+            onChange={(selected) =>
+              setFilters((prev) => ({ ...prev, [name]: selected.value }))
+            }
+          />
+        ))}
       </div>
 
-      {/* Tabla */}
       <table
         {...getTableProps()}
         style={{
@@ -219,7 +226,6 @@ function RawDataTable() {
         </tbody>
       </table>
 
-      {/* Navegación */}
       <div
         style={{
           marginTop: '1rem',
@@ -233,8 +239,9 @@ function RawDataTable() {
           disabled={!canPreviousPage}
           style={{
             padding: '8px 16px',
-            backgroundColor: '#eee',
-            border: '1px solid #ccc',
+            backgroundColor: '#e74c3c',
+            color: '#fff',
+            border: 'none',
             borderRadius: '6px',
             cursor: canPreviousPage ? 'pointer' : 'not-allowed',
           }}
@@ -251,8 +258,9 @@ function RawDataTable() {
           disabled={!canNextPage}
           style={{
             padding: '8px 16px',
-            backgroundColor: '#eee',
-            border: '1px solid #ccc',
+            backgroundColor: '#e74c3c',
+            color: '#fff',
+            border: 'none',
             borderRadius: '6px',
             cursor: canNextPage ? 'pointer' : 'not-allowed',
           }}
@@ -262,6 +270,6 @@ function RawDataTable() {
       </div>
     </div>
   );
-}
+};
 
 export default RawDataTable;
