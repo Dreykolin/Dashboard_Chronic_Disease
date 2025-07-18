@@ -17,7 +17,7 @@ function NavBar({ setActiveTab, activeTab }) {
           className={`${styles.navLink} ${activeTab === 'Coropletico' ? styles.active : ''}`}
           onClick={() => setActiveTab('Coropletico')}
         >
-          Coropletico
+          Coroplético
         </button>
         <button
           className={`${styles.navLink} ${activeTab === 'Estadísticas' ? styles.active : ''}`}

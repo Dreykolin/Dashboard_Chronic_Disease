@@ -6,7 +6,28 @@ import styles from '@/styles/Coropletico.module.css';
 
 const GEO_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 const JSON_URL = '/data/rawData.json';
+const indicatorMapping = {
+    "ORAL_HEALTH_CANCER_LIPORALCAVITY_100K": "Tasa ajustada de incidencia de cáncer de labios y cavidad oral (por 100.000 hab.)",
+    "SA_0000001419": "Años de vida ajustados por discapacidad (DALYs) por cáncer de mama",
+    "SA_0000001420": "DALYs por cáncer de colon y recto (ajustados por edad)",
+    "SA_0000001430": "DALYs por cáncer de esófago (ajustados por edad)",
+    "SA_0000001438": "Tasa de mortalidad ajustada por cáncer de mama",
+    "SA_0000001439": "Tasa de mortalidad ajustada por cáncer de colon y recto",
+    "SA_0000001445": "Tasa de mortalidad ajustada por cáncer de hígado",
+    "SA_0000001448": "Tasa de mortalidad ajustada por cáncer orofaríngeoo",
+    "NCDMORT3070": "Probabilidad(%) de morir entre los 30 y 70 años por ENT(CVD, cáncer, diabetes, respiratorias)",
+    "NCD_DIABETES_PREVALENCE_AGESTD": "Prevalencia ajustada por edad de diabetes en adultos",
+    "NCD_DIABETES_TREATMENT_AGESTD": "Porcentaje de personas con diabetes que reciben tratamiento (ajustado por edad)",
+    "NCD_HYP_CONTROL_A": "Porcentaje de hipertensos con presión arterial controlada",
+    "NCD_HYP_DIAGNOSIS_A": "Porcentaje de personas hipertensas que han sido diagnosticadas",
+    "NCD_HYP_PREVALENCE_A": "Prevalencia de hipertensión arterial en adultos",
+    "NCD_HYP_TREATMENT_A": "Porcentaje de personas hipertensas que reciben tratamiento",
+    "NCD_BMI_30A": "Prevalencia ajustada por edad de obesidad (IMC ≥ 30)"
+};
 
+const colorScale = scaleLinear()
+    .domain([10, 50])
+    .range(["#ffedea", "#ff5233"]);
 const indicatorLabels = {
     "ORAL_HEALTH_CANCER_LIPORALCAVITY_100K": "Cáncer oral/labial",
     "SA_0000001419": "DALYs - cáncer de mama",
@@ -32,9 +53,26 @@ const sexLabels = {
     "SEX_BTSX": "Ambos sexos"
 };
 
+const percentageIndicatorsSet = new Set([
+    "NCD_HYP_CONTROL_A",
+    "NCD_HYP_DIAGNOSIS_A",
+    "NCD_HYP_PREVALENCE_A",
+    "NCD_HYP_TREATMENT_A",
+    "NCD_BMI_30A",
+    "SA_0000001438",
+    "SA_0000001439",
+    "SA_0000001445",
+    "SA_0000001448",
+    "NCDMORT3070",
+    "ORAL_HEALTH_CANCER_LIPORALCAVITY_100K"
+]);
+
 const isPercentageIndicator = (indicator) => {
     const keywords = ["PREVALENCE", "TREATMENT", "CONTROL", "DIAGNOSIS", "PERCENTAGE", "PROBABILITY"];
-    return keywords.some(k => indicator.includes(k));
+    return (
+        percentageIndicatorsSet.has(indicator) ||
+        keywords.some(k => indicator.includes(k))
+    );
 };
 
 const MapaCoropletico = ({ filters, setFilters, setTooltipContent }) => {
@@ -126,7 +164,7 @@ const MapaCoropletico = ({ filters, setFilters, setTooltipContent }) => {
     return (
         <div>
             <h2 className={styles.title}>
-                {indicatorLabels[filters.indicator] || filters.indicator} ({sexLabels[filters.sex] || filters.sex}, {filters.year})
+                {indicatorMapping[filters.indicator] || filters.indicator} ({sexLabels[filters.sex] || filters.sex}, {filters.year})
             </h2>
 
             <button
