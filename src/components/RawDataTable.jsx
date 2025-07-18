@@ -42,7 +42,7 @@ const RawDataTable = () => {
     sex: 'Sexo',
     disease: 'Enfermedad',
     region: 'Region',
-    continent: 'Coninente',
+    continent: 'Continente',
     indicator: 'Indicador',
   });
 

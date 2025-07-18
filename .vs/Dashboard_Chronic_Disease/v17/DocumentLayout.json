@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\Dreyk\\OneDrive\\Escritorio\\Dashboard\\Dashboard_Chronic_Disease\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Dreyk\\OneDrive\\Escritorio\\Dashboard\\Dashboard_Chronic_Disease\\src\\components\\RawDataTable.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\RawDataTable.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Dreyk\\OneDrive\\Escritorio\\Dashboard\\Dashboard_Chronic_Disease\\src\\components\\Statistics_land.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\Statistics_land.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
@@ -21,10 +25,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Dreyk\\OneDrive\\Escritorio\\Dashboard\\Dashboard_Chronic_Disease\\src\\components\\MainPage.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\MainPage.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Dreyk\\OneDrive\\Escritorio\\Dashboard\\Dashboard_Chronic_Disease\\src\\components\\RawDataTable.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\RawDataTable.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Dreyk\\OneDrive\\Escritorio\\Dashboard\\Dashboard_Chronic_Disease\\src\\components\\ScatterPlot.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
@@ -58,11 +58,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Statistics_land.jsx",
               "DocumentMoniker": "C:\\Users\\Dreyk\\OneDrive\\Escritorio\\Dashboard\\Dashboard_Chronic_Disease\\src\\components\\Statistics_land.jsx",
               "RelativeDocumentMoniker": "src\\components\\Statistics_land.jsx",
@@ -72,18 +72,6 @@
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
               "WhenOpened": "2025-07-18T00:50:30.024Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Statistics.jsx",
-              "DocumentMoniker": "C:\\Users\\Dreyk\\OneDrive\\Escritorio\\Dashboard\\Dashboard_Chronic_Disease\\src\\components\\Statistics.jsx",
-              "RelativeDocumentMoniker": "src\\components\\Statistics.jsx",
-              "ToolTip": "C:\\Users\\Dreyk\\OneDrive\\Escritorio\\Dashboard\\Dashboard_Chronic_Disease\\src\\components\\Statistics.jsx",
-              "RelativeToolTip": "src\\components\\Statistics.jsx",
-              "ViewState": "AgIAAA8AAAAAAAAAAAAAAB4BAAAHAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2025-07-17T23:58:29.269Z"
             },
             {
               "$type": "Document",
@@ -111,7 +99,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "NavBar.jsx",
               "DocumentMoniker": "C:\\Users\\Dreyk\\OneDrive\\Escritorio\\Dashboard\\Dashboard_Chronic_Disease\\src\\components\\NavBar.jsx",
               "RelativeDocumentMoniker": "src\\components\\NavBar.jsx",
@@ -123,7 +111,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Coropletico.jsx",
               "DocumentMoniker": "C:\\Users\\Dreyk\\OneDrive\\Escritorio\\Dashboard\\Dashboard_Chronic_Disease\\src\\components\\Coropletico.jsx",
               "RelativeDocumentMoniker": "src\\components\\Coropletico.jsx",
@@ -131,8 +119,32 @@
               "RelativeToolTip": "src\\components\\Coropletico.jsx",
               "ViewState": "AgIAAJ8AAAAAAAAAAAAQwKcAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2025-07-06T03:03:12.032Z",
+              "WhenOpened": "2025-07-06T03:03:12.032Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "RawDataTable.jsx",
+              "DocumentMoniker": "C:\\Users\\Dreyk\\OneDrive\\Escritorio\\Dashboard\\Dashboard_Chronic_Disease\\src\\components\\RawDataTable.jsx",
+              "RelativeDocumentMoniker": "src\\components\\RawDataTable.jsx",
+              "ToolTip": "C:\\Users\\Dreyk\\OneDrive\\Escritorio\\Dashboard\\Dashboard_Chronic_Disease\\src\\components\\RawDataTable.jsx",
+              "RelativeToolTip": "src\\components\\RawDataTable.jsx",
+              "ViewState": "AgIAACEAAAAAAAAAAAAAACgAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2025-07-18T01:33:27.03Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Statistics.jsx",
+              "DocumentMoniker": "C:\\Users\\Dreyk\\OneDrive\\Escritorio\\Dashboard\\Dashboard_Chronic_Disease\\src\\components\\Statistics.jsx",
+              "RelativeDocumentMoniker": "src\\components\\Statistics.jsx",
+              "ToolTip": "C:\\Users\\Dreyk\\OneDrive\\Escritorio\\Dashboard\\Dashboard_Chronic_Disease\\src\\components\\Statistics.jsx",
+              "RelativeToolTip": "src\\components\\Statistics.jsx",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAAAB4BAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2025-07-17T23:58:29.269Z"
             },
             {
               "$type": "Document",
@@ -148,7 +160,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "MainPage.jsx",
               "DocumentMoniker": "C:\\Users\\Dreyk\\OneDrive\\Escritorio\\Dashboard\\Dashboard_Chronic_Disease\\src\\components\\MainPage.jsx",
               "RelativeDocumentMoniker": "src\\components\\MainPage.jsx",
@@ -157,18 +169,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
               "WhenOpened": "2025-07-06T06:08:57.463Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "RawDataTable.jsx",
-              "DocumentMoniker": "C:\\Users\\Dreyk\\OneDrive\\Escritorio\\Dashboard\\Dashboard_Chronic_Disease\\src\\components\\RawDataTable.jsx",
-              "RelativeDocumentMoniker": "src\\components\\RawDataTable.jsx",
-              "ToolTip": "C:\\Users\\Dreyk\\OneDrive\\Escritorio\\Dashboard\\Dashboard_Chronic_Disease\\src\\components\\RawDataTable.jsx",
-              "RelativeToolTip": "src\\components\\RawDataTable.jsx",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2025-07-18T01:33:27.03Z"
             },
             {
               "$type": "Document",
