@@ -3,12 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\Dreyk\\OneDrive\\Escritorio\\Dashboard\\Dashboard_Chronic_Disease\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Dreyk\\OneDrive\\Escritorio\\Dashboard\\Dashboard_Chronic_Disease\\src\\components\\Coropletico.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\Coropletico.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Dreyk\\OneDrive\\Escritorio\\Dashboard\\Dashboard_Chronic_Disease\\src\\components\\MainPage.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\MainPage.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Dreyk\\OneDrive\\Escritorio\\Dashboard\\Dashboard_Chronic_Disease\\src\\components\\FilterMenu.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\FilterMenu.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Dreyk\\OneDrive\\Escritorio\\Dashboard\\Dashboard_Chronic_Disease\\src\\components\\NavBar.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\NavBar.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Dreyk\\OneDrive\\Escritorio\\Dashboard\\Dashboard_Chronic_Disease\\src\\components\\Coropletico.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\Coropletico.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Dreyk\\OneDrive\\Escritorio\\Dashboard\\Dashboard_Chronic_Disease\\src\\styles\\FilterMenu.module.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\styles\\FilterMenu.module.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,11 +30,50 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 4,
+              "Title": "FilterMenu.module.css",
+              "DocumentMoniker": "C:\\Users\\Dreyk\\OneDrive\\Escritorio\\Dashboard\\Dashboard_Chronic_Disease\\src\\styles\\FilterMenu.module.css",
+              "RelativeDocumentMoniker": "src\\styles\\FilterMenu.module.css",
+              "ToolTip": "C:\\Users\\Dreyk\\OneDrive\\Escritorio\\Dashboard\\Dashboard_Chronic_Disease\\src\\styles\\FilterMenu.module.css",
+              "RelativeToolTip": "src\\styles\\FilterMenu.module.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-07-06T06:11:20.044Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "FilterMenu.jsx",
+              "DocumentMoniker": "C:\\Users\\Dreyk\\OneDrive\\Escritorio\\Dashboard\\Dashboard_Chronic_Disease\\src\\components\\FilterMenu.jsx",
+              "RelativeDocumentMoniker": "src\\components\\FilterMenu.jsx",
+              "ToolTip": "C:\\Users\\Dreyk\\OneDrive\\Escritorio\\Dashboard\\Dashboard_Chronic_Disease\\src\\components\\FilterMenu.jsx",
+              "RelativeToolTip": "src\\components\\FilterMenu.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2025-07-06T06:10:49.063Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainPage.jsx",
+              "DocumentMoniker": "C:\\Users\\Dreyk\\OneDrive\\Escritorio\\Dashboard\\Dashboard_Chronic_Disease\\src\\components\\MainPage.jsx",
+              "RelativeDocumentMoniker": "src\\components\\MainPage.jsx",
+              "ToolTip": "C:\\Users\\Dreyk\\OneDrive\\Escritorio\\Dashboard\\Dashboard_Chronic_Disease\\src\\components\\MainPage.jsx",
+              "RelativeToolTip": "src\\components\\MainPage.jsx",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAuwBIAAABLAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2025-07-06T06:08:57.463Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "NavBar.jsx",
               "DocumentMoniker": "C:\\Users\\Dreyk\\OneDrive\\Escritorio\\Dashboard\\Dashboard_Chronic_Disease\\src\\components\\NavBar.jsx",
               "RelativeDocumentMoniker": "src\\components\\NavBar.jsx",
@@ -35,13 +86,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Coropletico.jsx",
               "DocumentMoniker": "C:\\Users\\Dreyk\\OneDrive\\Escritorio\\Dashboard\\Dashboard_Chronic_Disease\\src\\components\\Coropletico.jsx",
               "RelativeDocumentMoniker": "src\\components\\Coropletico.jsx",
               "ToolTip": "C:\\Users\\Dreyk\\OneDrive\\Escritorio\\Dashboard\\Dashboard_Chronic_Disease\\src\\components\\Coropletico.jsx",
               "RelativeToolTip": "src\\components\\Coropletico.jsx",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADcAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
               "WhenOpened": "2025-07-06T03:03:12.032Z",
               "EditorCaption": ""

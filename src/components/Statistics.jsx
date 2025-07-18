@@ -14,6 +14,7 @@ import {
 import Select from "react-select";
 import { ResponsiveWaffle } from "@nivo/waffle";
 import styles from "@/styles/Statistics.module.css";
+import ScatterPlot from './ScatterPlot'; // <-- AÑADE ESTA LÍNEA
 
 const diseaseLabels = {
   NCD_BMI_30A: "Obesidad (IMC ≥ 30)",
@@ -283,6 +284,14 @@ export default function Statistics() {
           ]}
         />
       </div>
+          <div className={styles.container}>
+              {/* ...tus otros gráficos... */}
+
+              <hr style={{ margin: '4rem 0' }} />
+
+              {/* ✅ Pasa rawData como prop al componente */}
+              <ScatterPlot rawData={rawData} />
+          </div> 
     </div>
   );
 }

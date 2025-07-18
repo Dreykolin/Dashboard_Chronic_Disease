@@ -38,12 +38,12 @@ const RawDataTable = () => {
   const [filtered, setFiltered] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({
-    year: 'Todos',
-    sex: 'Todos',
-    disease: 'Todos',
-    region: 'Todos',
-    continent: 'Todos',
-    indicator: 'Todos',
+    year: 'Año',
+    sex: 'Sexo',
+    disease: 'Enfermedad',
+    region: 'Region',
+    continent: 'Coninente',
+    indicator: 'Indicador',
   });
 
   useEffect(() => {
@@ -56,11 +56,57 @@ const RawDataTable = () => {
       });
   }, []);
 
-  const years = useMemo(() => ['Todos', ...new Set(data.map((d) => d.year))].sort().reverse(), [data]);
-  const sexes = useMemo(() => ['Todos', ...new Set(data.map((d) => d.sex).filter(Boolean))], [data]);
+  // Enfermedad
   const diseases = useMemo(() => ['Todos', ...new Set(data.map((d) => d.disease))], [data]);
-  const regions = useMemo(() => ['Todos', ...new Set(data.map((d) => d.region).filter(Boolean))], [data]);
-  const continents = useMemo(() => ['Todos', ...new Set(data.map((d) => d.continent).filter(Boolean))], [data]);
+
+  const indicatorsByDisease = useMemo(() => {
+    const map = {};
+    data.forEach((d) => {
+      if (!map[d.disease]) map[d.disease] = new Set();
+      if (d.indicator) map[d.disease].add(d.indicator);
+    });
+    // Convierte Set a Array
+    Object.keys(map).forEach((k) => map[k] = Array.from(map[k]));
+    return map;
+  }, [data]);
+
+  // Indicador depende de enfermedad
+  const indicators = useMemo(() => {
+    if (filters.disease !== 'Todos' && indicatorsByDisease[filters.disease]) {
+      return ['Todos', ...indicatorsByDisease[filters.disease]];
+    }
+    return ['Todos'];
+  }, [filters.disease, indicatorsByDisease]);
+
+  // Continente depende de enfermedad e indicador
+  const continents = useMemo(() => {
+    let filtered = data;
+    if (filters.disease !== 'Todos') filtered = filtered.filter(d => d.disease === filters.disease);
+    if (filters.indicator !== 'Todos') filtered = filtered.filter(d => d.indicator === filters.indicator);
+    return ['Todos', ...new Set(filtered.map((d) => d.continent).filter(Boolean))];
+  }, [data, filters.disease, filters.indicator]);
+
+  // Región depende de continente
+  const regions = useMemo(() => {
+    let filtered = data;
+    if (filters.continent !== 'Todos') filtered = filtered.filter(d => d.continent === filters.continent);
+    return ['Todos', ...new Set(filtered.map((d) => d.region).filter(Boolean))];
+  }, [data, filters.continent]);
+
+  // Año depende de indicador
+  const years = useMemo(() => {
+    let filtered = data;
+    if (filters.indicator !== 'Todos') filtered = filtered.filter(d => d.indicator === filters.indicator);
+    return ['Todos', ...new Set(filtered.map((d) => d.year))].sort().reverse();
+  }, [data, filters.indicator]);
+
+  // Sexo depende de enfermedad e indicador
+  const sexes = useMemo(() => {
+    let filtered = data;
+    if (filters.disease !== 'Todos') filtered = filtered.filter(d => d.disease === filters.disease);
+    if (filters.indicator !== 'Todos') filtered = filtered.filter(d => d.indicator === filters.indicator);
+    return ['Todos', ...new Set(filtered.map((d) => d.sex).filter(Boolean))];
+  }, [data, filters.disease, filters.indicator]);
 
   useEffect(() => {
     let result = data;
@@ -141,25 +187,6 @@ const RawDataTable = () => {
 
   const { globalFilter, pageIndex } = state;
 
-  const indicatorsByDisease = useMemo(() => {
-    const map = {};
-    data.forEach((d) => {
-      if (!map[d.disease]) map[d.disease] = new Set();
-      if (d.indicator) map[d.disease].add(d.indicator);
-    });
-    // Convierte Set a Array
-    Object.keys(map).forEach((k) => map[k] = Array.from(map[k]));
-    return map;
-  }, [data]);
-
-  const indicators = useMemo(() => {
-    if (filters.disease !== 'Todos' && indicatorsByDisease[filters.disease]) {
-      return ['Todos', ...indicatorsByDisease[filters.disease]];
-    }
-    // Si no hay enfermedad seleccionada, muestra todos los indicadores únicos
-    return ['Todos', ...new Set(data.map((d) => d.indicator).filter(Boolean))];
-  }, [filters.disease, indicatorsByDisease, data]);
-
   if (loading) return <p style={{ textAlign: 'center' }}>Cargando datos...</p>;
 
   const styledSelect = {
@@ -186,6 +213,7 @@ const RawDataTable = () => {
         }}
       />
 
+      {/* Filtros dependientes */}
       <div
         style={{
           display: 'flex',
@@ -194,29 +222,66 @@ const RawDataTable = () => {
           flexWrap: 'wrap',
         }}
       >
-        {[{
-          name: 'year', options: years
-        }, {
-          name: 'sex', options: sexes
-        }, {
-          name: 'disease', options: diseases
-        }, {
-          name: 'indicator', options: indicators
-        }, {
-          name: 'region', options: regions
-        }, {
-          name: 'continent', options: continents
-        }].map(({ name, options }) => (
-          <Select
-            key={name}
-            styles={styledSelect}
-            options={options.map((v) => ({ value: v, label: v }))}
-            value={{ value: filters[name], label: filters[name] }}
-            onChange={(selected) =>
-              setFilters((prev) => ({ ...prev, [name]: selected.value }))
-            }
-          />
-        ))}
+        <Select
+          key="disease"
+          styles={styledSelect}
+          options={diseases.map((v) => ({ value: v, label: v }))}
+          value={{ value: filters.disease, label: filters.disease }}
+          onChange={(selected) =>
+            setFilters((prev) => ({ ...prev, disease: selected.value, indicator: 'Todos', continent: 'Todos', region: 'Todos', year: 'Todos', sex: 'Todos' }))
+          }
+          placeholder="Enfermedad"
+        />
+        <Select
+          key="indicator"
+          styles={styledSelect}
+          options={indicators.map((v) => ({ value: v, label: v }))}
+          value={{ value: filters.indicator, label: filters.indicator }}
+          onChange={(selected) =>
+            setFilters((prev) => ({ ...prev, indicator: selected.value, continent: 'Todos', region: 'Todos', year: 'Todos', sex: 'Todos' }))
+          }
+          placeholder="Indicador"
+        />
+        <Select
+          key="continent"
+          styles={styledSelect}
+          options={continents.map((v) => ({ value: v, label: v }))}
+          value={{ value: filters.continent, label: filters.continent }}
+          onChange={(selected) =>
+            setFilters((prev) => ({ ...prev, continent: selected.value, region: 'Todos', year: 'Todos', sex: 'Todos' }))
+          }
+          placeholder="Continente"
+        />
+        <Select
+          key="region"
+          styles={styledSelect}
+          options={regions.map((v) => ({ value: v, label: v }))}
+          value={{ value: filters.region, label: filters.region }}
+          onChange={(selected) =>
+            setFilters((prev) => ({ ...prev, region: selected.value, year: 'Todos', sex: 'Todos' }))
+          }
+          placeholder="Región"
+        />
+        <Select
+          key="year"
+          styles={styledSelect}
+          options={years.map((v) => ({ value: v, label: v }))}
+          value={{ value: filters.year, label: filters.year }}
+          onChange={(selected) =>
+            setFilters((prev) => ({ ...prev, year: selected.value, sex: 'Todos' }))
+          }
+          placeholder="Año"
+        />
+        <Select
+          key="sex"
+          styles={styledSelect}
+          options={sexes.map((v) => ({ value: v, label: v }))}
+          value={{ value: filters.sex, label: filters.sex }}
+          onChange={(selected) =>
+            setFilters((prev) => ({ ...prev, sex: selected.value }))
+          }
+          placeholder="Sexo"
+        />
       </div>
 
       <table

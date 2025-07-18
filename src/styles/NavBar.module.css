@@ -1,75 +1,73 @@
-.navbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #ffffff;
-  padding: 0 2rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  position: sticky;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-  height: 70px;
+﻿/* Paleta de colores profesional y minimalista */
+.root {
+    --background-color: #ffffff;
+    --border-color: #e9ecef;
+    --text-primary: #212529;
+    --text-secondary: #6c757d;
+    --accent-primary: #4f46e5; /* Un �ndigo moderno */
+    --accent-bg-light: #eef2ff; /* Un fondo muy suave para el estado activo/hover */
+    --nav-height: 70px;
+    --border-radius: 8px;
 }
 
-.left {
-  flex: 1;
+.navbar {
+    display: flex;
+    align-items: center;
+    height: var(--nav-height);
+    padding-inline: 2rem;
+    background-color: var(--background-color);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.left, .right {
+    flex: 1;
 }
 
 .logo {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: #343a40;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--text-primary);
 }
 
+    /* Le damos el color del tema al �cono del logo */
+    .logo svg {
+        color: var(--accent-primary);
+    }
+
 .center {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem; /* Menor separaci�n para el estilo p�ldora */
 }
 
 .navLink {
-  text-decoration: none;
-  color: #6c757d;
-  font-weight: 500;
-  padding: 0.5rem 0;
-  position: relative;
-  transition: color 0.2s ease-in-out;
+    /* Reseteamos el estilo de bot�n */
+    background: none;
+    border: none;
+    cursor: pointer;
+    /* Estilo del link */
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-weight: 500;
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
-.navLink::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background-color: #ff5233;
-  transform: scaleX(0);
-  transform-origin: center;
-  transition: transform 0.3s ease;
-}
+    .navLink:hover {
+        background-color: var(--accent-bg-light);
+        color: var(--text-primary);
+    }
 
-.navLink:hover {
-  color: #343a40;
-}
-
-.navLink:hover::after,
-.navLink.active::after {
-  transform: scaleX(1);
-}
-
-.navLink.active {
-  color: #343a40;
-}
-
-.right {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  flex: 1;
-  gap: 1.5rem;
-}
+    /* El estado activo tiene el fondo y el color de acento */
+    .navLink.active {
+        background-color: var(--accent-bg-light);
+        color: var(--accent-primary);
+        font-weight: 600;
+    }

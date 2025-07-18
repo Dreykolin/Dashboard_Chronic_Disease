@@ -3,27 +3,10 @@ import { ComposableMap, Geographies, Geography, Sphere, Graticule } from 'react-
 import { scaleLinear } from 'd3-scale';
 import ReactSlider from 'react-slider';
 import styles from '@/styles/Coropletico.module.css';
+
 const GEO_URL = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 const JSON_URL = '/data/rawData.json';
-const colorScale = scaleLinear().domain([10, 50]).range(["#ffedea", "#ff5233"]);
-const indicatorMapping = {
-    "ORAL_HEALTH_CANCER_LIPORALCAVITY_100K": "Tasa ajustada de incidencia de cáncer de labios y cavidad oral (por 100.000 hab.)",
-    "SA_0000001419": "Años de vida ajustados por discapacidad (DALYs) por cáncer de mama",
-    "SA_0000001420": "DALYs por cáncer de colon y recto (ajustados por edad)",
-    "SA_0000001430": "DALYs por cáncer de esófago (ajustados por edad)",
-    "SA_0000001438": "Tasa de mortalidad ajustada por cáncer de mama",
-    "SA_0000001439": "Tasa de mortalidad ajustada por cáncer de colon y recto",
-    "SA_0000001445": "Tasa de mortalidad ajustada por cáncer de hígado",
-    "SA_0000001448": "Tasa de mortalidad ajustada por cáncer orofaríngeoo",
-    "NCDMORT3070": "Probabilidad(%) de morir entre los 30 y 70 años por ENT(CVD, cáncer, diabetes, respiratorias)",
-    "NCD_DIABETES_PREVALENCE_AGESTD": "Prevalencia ajustada por edad de diabetes en adultos",
-    "NCD_DIABETES_TREATMENT_AGESTD": "Porcentaje de personas con diabetes que reciben tratamiento (ajustado por edad)",
-    "NCD_HYP_CONTROL_A": "Porcentaje de hipertensos con presión arterial controlada",
-    "NCD_HYP_DIAGNOSIS_A": "Porcentaje de personas hipertensas que han sido diagnosticadas",
-    "NCD_HYP_PREVALENCE_A": "Prevalencia de hipertensión arterial en adultos",
-    "NCD_HYP_TREATMENT_A": "Porcentaje de personas hipertensas que reciben tratamiento",
-    "NCD_BMI_30A": "Prevalencia ajustada por edad de obesidad (IMC ≥ 30)"
-};
+
 const indicatorLabels = {
     "ORAL_HEALTH_CANCER_LIPORALCAVITY_100K": "Cáncer oral/labial",
     "SA_0000001419": "DALYs - cáncer de mama",
@@ -42,11 +25,18 @@ const indicatorLabels = {
     "NCD_HYP_TREATMENT_A": "Tratamiento de hipertensión",
     "NCD_BMI_30A": "Obesidad (IMC ≥ 30)"
 };
+
 const sexLabels = {
     "SEX_FMLE": "Mujeres",
     "SEX_MLE": "Hombres",
     "SEX_BTSX": "Ambos sexos"
 };
+
+const isPercentageIndicator = (indicator) => {
+    const keywords = ["PREVALENCE", "TREATMENT", "CONTROL", "DIAGNOSIS", "PERCENTAGE", "PROBABILITY"];
+    return keywords.some(k => indicator.includes(k));
+};
+
 const MapaCoropletico = ({ filters, setFilters, setTooltipContent }) => {
     const [fullData, setFullData] = useState([]);
     const [mapData, setMapData] = useState([]);
@@ -55,37 +45,7 @@ const MapaCoropletico = ({ filters, setFilters, setTooltipContent }) => {
     const [availableIndicators, setAvailableIndicators] = useState([]);
     const [loading, setLoading] = useState(true);
     const [filtersOpen, setFiltersOpen] = useState(true);
-    useEffect(() => {
-        if (fullData.length === 0 || !filters.indicator) return;
 
-        // Filtrar por indicador y sexo
-        const filteredData = fullData.filter(
-            row =>
-                row.indicator === filters.indicator &&
-                row.sex === filters.sex
-        );
-
-        // Obtener años disponibles SOLO para este indicador
-        const years = [...new Set(filteredData.map(row => row.year))]
-            .filter(Boolean)
-            .sort();
-
-        setAvailableYears(years); // 🔥 Este setea los años dinámicamente
-
-        // Transformar los datos
-        const transformedData = filteredData.map(row => ({
-            name: row.country,
-            value: parseFloat(row.value)
-        })).filter(d => d.name && !isNaN(d.value));
-
-        setMapData(transformedData);
-
-        // Si el año actual ya no está disponible, seleccionar el más reciente
-        if (!years.includes(filters.year)) {
-            setFilters(prev => ({ ...prev, year: years[years.length - 1] }));
-        }
-
-    }, [filters.indicator, filters.sex, fullData]);
     useEffect(() => {
         fetch(JSON_URL)
             .then(res => res.json())
@@ -98,7 +58,6 @@ const MapaCoropletico = ({ filters, setFilters, setTooltipContent }) => {
                 setAvailableSexes(sexes);
                 setAvailableIndicators(indicators);
 
-                // Inicializar con el primer indicador si no hay uno ya seleccionado
                 setFilters(prev => ({
                     ...prev,
                     indicator: prev.indicator || indicators[0],
@@ -113,94 +72,123 @@ const MapaCoropletico = ({ filters, setFilters, setTooltipContent }) => {
     }, []);
 
     useEffect(() => {
-        if (fullData.length === 0) return;
+        if (fullData.length === 0 || !filters.indicator) return;
 
         const filteredData = fullData.filter(
+            row =>
+                row.indicator === filters.indicator &&
+                row.sex === filters.sex
+        );
+
+        const years = [...new Set(filteredData.map(row => row.year))]
+            .filter(Boolean)
+            .sort();
+
+        setAvailableYears(years);
+
+        const transformed = filteredData
+            .map(row => ({ name: row.country, value: parseFloat(row.value) }))
+            .filter(d => d.name && !isNaN(d.value));
+
+        setMapData(transformed);
+
+        if (!years.includes(filters.year)) {
+            setFilters(prev => ({ ...prev, year: years[years.length - 1] }));
+        }
+
+    }, [filters.indicator, filters.sex, fullData]);
+
+    useEffect(() => {
+        if (fullData.length === 0) return;
+
+        const filtered = fullData.filter(
             row =>
                 String(row.year) === String(filters.year) &&
                 row.sex === filters.sex &&
                 row.indicator === filters.indicator
         );
 
-        const transformedData = filteredData.map(row => ({
-            name: row.country,
-            value: parseFloat(row.value)
-        })).filter(d => d.name && !isNaN(d.value));
+        const transformed = filtered
+            .map(row => ({ name: row.country, value: parseFloat(row.value) }))
+            .filter(d => d.name && !isNaN(d.value));
 
-        setMapData(transformedData);
+        setMapData(transformed);
     }, [filters, fullData]);
 
-    if (loading) {
-        return <p style={{ textAlign: 'center' }}>Cargando mapa...</p>;
-    }
+    if (loading) return <p style={{ textAlign: 'center' }}>Cargando mapa...</p>;
+
+    const values = mapData.map(d => d.value);
+    const isPercentage = isPercentageIndicator(filters.indicator);
+    const colorScale = scaleLinear()
+        .domain(isPercentage ? [0, 100] : [Math.min(...values), Math.max(...values)])
+        .range(["#ffedea", "#ff5233"]);
 
     return (
         <div>
             <h2 className={styles.title}>
-                {indicatorMapping[filters.indicator] || filters.indicator} ({sexLabels[filters.sex] || filters.sex}, {filters.year})
+                {indicatorLabels[filters.indicator] || filters.indicator} ({sexLabels[filters.sex] || filters.sex}, {filters.year})
             </h2>
+
             <button
                 className={styles.toggleButton}
                 onClick={() => setFiltersOpen(!filtersOpen)}
             >
-                Filtros{" "}
-                <span className={`${styles.arrow} ${filtersOpen ? styles.rotate : ''}`}>
-                    ▼
-                </span>
+                Filtros <span className={`${styles.arrow} ${filtersOpen ? styles.rotate : ''}`}>▼</span>
             </button>
+
             {filtersOpen && (
-            <div className={styles.sliderContainer}>
-                <label className={styles.label}>Indicador:</label>
-                <select
-                    className={styles.select}
-                    value={filters.indicator}
-                    onChange={(e) => setFilters(prev => ({ ...prev, indicator: e.target.value }))}
-                >
-                    {availableIndicators.map(ind => (
-                        <option key={ind} value={ind}>
-                            {indicatorLabels[ind] || ind}
-                        </option>
-                    ))}
-                </select>
+                <div className={styles.sliderContainer}>
+                    <label className={styles.label}>Indicador:</label>
+                    <select
+                        className={styles.select}
+                        value={filters.indicator}
+                        onChange={(e) => setFilters(prev => ({ ...prev, indicator: e.target.value }))}
+                    >
+                        {availableIndicators.map(ind => (
+                            <option key={ind} value={ind}>
+                                {indicatorLabels[ind] || ind}
+                            </option>
+                        ))}
+                    </select>
 
-                <label className={styles.label}>Año: <strong>{filters.year}</strong></label>
+                    <label className={styles.label}>Año: <strong>{filters.year}</strong></label>
 
-                <ReactSlider
-                    className={styles.slider}
-                    thumbClassName={styles.thumb}
-                    trackClassName={styles.track}
-                    min={availableYears.length > 0 ? Math.min(...availableYears.map(y => parseInt(y))) : 0}
-                    max={availableYears.length > 0 ? Math.max(...availableYears.map(y => parseInt(y))) : 0}
-                    step={1}
-                    value={parseInt(filters.year)}
-                    onAfterChange={(val) => setFilters(prev => ({ ...prev, year: val.toString() }))}
-                    marks={availableYears.map(y => parseInt(y))}
-                    renderMark={(props) => {
-                        const year = props.key;
-                        const showLabel = availableYears.includes(year.toString()) && year % 2 === 0;
-                        if (!showLabel) return null;
-                        return (
-                            <span {...props} className={styles.mark}>
-                                {year}
-                            </span>
-                        );
-                    }}
-                />
+                    <ReactSlider
+                        className={styles.slider}
+                        thumbClassName={styles.thumb}
+                        trackClassName={styles.track}
+                        min={Math.min(...availableYears.map(y => parseInt(y)))}
+                        max={Math.max(...availableYears.map(y => parseInt(y)))}
+                        step={1}
+                        value={parseInt(filters.year)}
+                        onAfterChange={(val) => setFilters(prev => ({ ...prev, year: val.toString() }))}
+                        renderMark={(props) => {
+                            const year = props.key;
+                            const showLabel = availableYears.includes(year.toString()) && year % 2 === 0;
+                            if (!showLabel) return null;
+                            return (
+                                <span {...props} className={styles.mark}>
+                                    {year}
+                                </span>
+                            );
+                        }}
+                    />
 
-                <label className={styles.label} htmlFor="sexSelect">Sexo:</label>
-                <select
-                    id="sexSelect"
-                    className={styles.select}
-                    value={filters.sex}
-                    onChange={(e) => setFilters(prev => ({ ...prev, sex: e.target.value }))}
-                >
-                    {availableSexes.map(sex => (
-                        <option key={sex} value={sex}>
-                            {sexLabels[sex] || sex}
-                        </option>
-                    ))}
-                </select>
-                </div>)}
+                    <label className={styles.label} htmlFor="sexSelect">Sexo:</label>
+                    <select
+                        id="sexSelect"
+                        className={styles.select}
+                        value={filters.sex}
+                        onChange={(e) => setFilters(prev => ({ ...prev, sex: e.target.value }))}
+                    >
+                        {availableSexes.map(sex => (
+                            <option key={sex} value={sex}>
+                                {sexLabels[sex] || sex}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+            )}
 
             <ComposableMap
                 projectionConfig={{ rotate: [-10, 0, 0], scale: 147 }}
@@ -216,6 +204,12 @@ const MapaCoropletico = ({ filters, setFilters, setTooltipContent }) => {
                         {({ geographies }) =>
                             geographies.map((geo) => {
                                 const d = mapData.find((s) => s.name === geo.properties.name);
+                                const value = d
+                                    ? isPercentage
+                                        ? `${d.value.toFixed(1)}%`
+                                        : d.value.toLocaleString()
+                                    : "Sin datos";
+
                                 return (
                                     <Geography
                                         key={geo.rsmKey}
@@ -225,9 +219,7 @@ const MapaCoropletico = ({ filters, setFilters, setTooltipContent }) => {
                                         strokeWidth={0.5}
                                         className={styles.geography}
                                         onMouseEnter={() => {
-                                            const { name } = geo.properties;
-                                            const value = d ? `${d.value.toFixed(2)}%` : "Sin datos";
-                                            setTooltipContent(`${name} — ${value}`);
+                                            setTooltipContent(`${geo.properties.name} — ${value}`);
                                         }}
                                         onMouseLeave={() => setTooltipContent("")}
                                         data-tooltip-id="map-tooltip"
