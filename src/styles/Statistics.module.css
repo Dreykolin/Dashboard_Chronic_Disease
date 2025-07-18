@@ -1,11 +1,39 @@
 .container {
   padding: 2rem;
+  min-height: 100vh;
+  overflow-y: auto;
 }
 
 .filters {
   display: flex;
   gap: 1rem;
-  margin-bottom: 1rem;
+  margin: 1rem 0;
+  flex-wrap: wrap;
+}
+
+.filtersContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.mainFilterContainer {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.filterGroup {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.filterGroup label {
+  font-weight: bold;
+  color: #333;
 }
 
 .select {
@@ -34,6 +62,40 @@
     width: 300px;
     font-size: 0.95rem;
     z-index: 10;
+    min-width: 200px;
+}
+
+.secondaryFilters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.chartsGrid {
+  margin-top: 1rem; /* Reducir el margen superior ya que statsResume ya tiene margen */
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  align-items: flex-start; /* <-- Esto ayuda a que los gráficos no se tapen */
+}
+
+.chartContainer {
+  flex: 1;
+  min-width: 0;
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.07);
+  overflow: visible; /* <-- Esto ayuda a que los tooltips y labels no se corten */
 }
 
 .waffleContainer {
@@ -42,6 +104,7 @@
   border-radius: 12px;
   background-color: #fffefc;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  height: 300px;
 }
 
 .waffleControls {
@@ -79,4 +142,40 @@
   height: 12px;
   background-color: currentColor;
   border-radius: 2px;
+}
+
+.statsResume {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 2rem 0;  /* Ajustar el margen vertical */
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.statCard {
+  background: white;
+  padding: 1rem;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.statLabel {
+  font-size: 0.875rem;
+  color: #6c757d;
+  margin-bottom: 0.5rem;
+}
+
+.statValue {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.statSubtext {
+  font-size: 0.75rem;
+  color: #95a5a6;
+  margin-top: 0.25rem;
 }
