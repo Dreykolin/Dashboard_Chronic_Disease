@@ -17,7 +17,7 @@ import ScatterPlot from './ScatterPlot';
 const indicatorLabels = {
     NCD_BMI_30A: "Obesidad (IMC ≥ 30)",
     NCD_DIABETES_PREVALENCE_AGESTD: "Prevalencia de diabetes",
-    NCD_DIABETES_TREATMENT_AGESTD: "Tratamiento de diabetes",
+    NCD_DIABETES_TREATMENT_AGESTD: "Tratamiento de diabetes",   
     NCD_HYP_DIAGNOSIS_A: "Hipertensión diagnosticada",
     NCDMORT3070: "Probabilidad de morir 30-70 años (ENT)",
     SA_0000001438: "Mortalidad - cáncer de mama",
@@ -137,31 +137,40 @@ export default function StatisticsLand() {
     return (
         <div className={styles.container}>
             <h2>Indicadores de salud por país</h2>
-            <div className={styles.filters}>
-                <Select
-                    className={styles.reactSelect}
-                    value={barCountry ? { value: barCountry, label: barCountry } : null}
-                    options={uniqueCountries.map((c) => ({ value: c, label: c }))}
-                    onChange={(selected) => setBarCountry(selected.value)}
-                    placeholder="País"
-                    isSearchable
-                />
-                <Select
-                    className={styles.reactSelect}
-                    value={barYear ? { value: barYear, label: barYear } : null}
-                    options={uniqueYears.map((y) => ({ value: y, label: y }))}
-                    onChange={(selected) => setBarYear(selected.value)}
-                    placeholder="Año"
-                    isSearchable
-                />
-                <Select
-                    className={styles.reactSelect}
-                    value={barSex ? { value: barSex, label: sexLabels[barSex] || barSex } : null}
-                    options={uniqueSexes.map((s) => ({ value: s, label: sexLabels[s] || s }))}
-                    onChange={(selected) => setBarSex(selected.value)}
-                    placeholder="Sexo"
-                    isSearchable
-                />
+            <div className={styles.filters} style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', minWidth: '150px' }}>
+                    <label style={{ marginBottom: 4, fontWeight: '600' }}>País</label>
+                    <Select
+                        className={styles.reactSelect}
+                        value={barCountry ? { value: barCountry, label: barCountry } : null}
+                        options={uniqueCountries.map((c) => ({ value: c, label: c }))}
+                        onChange={(selected) => setBarCountry(selected.value)}
+                        placeholder="País"
+                        isSearchable
+                    />
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', minWidth: '100px' }}>
+                    <label style={{ marginBottom: 4, fontWeight: '600' }}>Año</label>
+                    <Select
+                        className={styles.reactSelect}
+                        value={barYear ? { value: barYear, label: barYear } : null}
+                        options={uniqueYears.map((y) => ({ value: y, label: y }))}
+                        onChange={(selected) => setBarYear(selected.value)}
+                        placeholder="Año"
+                        isSearchable
+                    />
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', minWidth: '120px' }}>
+                    <label style={{ marginBottom: 4, fontWeight: '600' }}>Sexo</label>
+                    <Select
+                        className={styles.reactSelect}
+                        value={barSex ? { value: barSex, label: sexLabels[barSex] || barSex } : null}
+                        options={uniqueSexes.map((s) => ({ value: s, label: sexLabels[s] || s }))}
+                        onChange={(selected) => setBarSex(selected.value)}
+                        placeholder="Sexo"
+                        isSearchable
+                    />
+                </div>
             </div>
 
             <ResponsiveContainer width="100%" height={400}>
@@ -190,24 +199,31 @@ export default function StatisticsLand() {
             </ResponsiveContainer>
 
             <h2>Distribución de indicadores</h2>
-            <div className={styles.filters}>
-                <Select
-                    className={styles.reactSelect}
-                    value={waffleContinent ? { value: waffleContinent, label: waffleContinent } : null}
-                    options={uniqueContinents.map((c) => ({ value: c, label: c }))}
-                    onChange={(selected) => setWaffleContinent(selected.value)}
-                    placeholder="Continente"
-                    isSearchable
-                />
-                <Select
-                    className={styles.reactSelect}
-                    value={waffleYear ? { value: waffleYear, label: waffleYear } : null}
-                    options={uniqueYears.map((y) => ({ value: y, label: y }))}
-                    onChange={(selected) => setWaffleYear(selected.value)}
-                    placeholder="Año"
-                    isSearchable
-                />
+            <div className={styles.filters} style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', minWidth: '150px' }}>
+                    <label style={{ marginBottom: 4, fontWeight: '600' }}>Continente</label>
+                    <Select
+                        className={styles.reactSelect}
+                        value={waffleContinent ? { value: waffleContinent, label: waffleContinent } : null}
+                        options={uniqueContinents.map((c) => ({ value: c, label: c }))}
+                        onChange={(selected) => setWaffleContinent(selected.value)}
+                        placeholder="Continente"
+                        isSearchable
+                    />
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', minWidth: '100px' }}>
+                    <label style={{ marginBottom: 4, fontWeight: '600' }}>Año</label>
+                    <Select
+                        className={styles.reactSelect}
+                        value={waffleYear ? { value: waffleYear, label: waffleYear } : null}
+                        options={uniqueYears.map((y) => ({ value: y, label: y }))}
+                        onChange={(selected) => setWaffleYear(selected.value)}
+                        placeholder="Año"
+                        isSearchable
+                    />
+                </div>
             </div>
+
             <div style={{ height: 400 }}>
                 <ResponsiveWaffle
                     data={waffleSummary}
