@@ -12,7 +12,7 @@ import {
 import Select from "react-select";
 import { ResponsiveWaffle } from "@nivo/waffle";
 import styles from "@/styles/Statistics.module.css";
-import ScatterPlot from './ScatterPlot'; // <-- AÑADE ESTA LÍNEA
+import ScatterPlot from './ScatterPlot';
 
 const indicatorLabels = {
     NCD_BMI_30A: "Obesidad (IMC ≥ 30)",
@@ -25,7 +25,6 @@ const indicatorLabels = {
     SA_0000001445: "Mortalidad - cáncer de hígado",
     SA_0000001448: "Mortalidad - cáncer orofaríngeo",
     ORAL_HEALTH_CANCER_LIPORALCAVITY_100K: "Cáncer oral/labial",
-
 };
 
 const validIndicators = Object.keys(indicatorLabels);
@@ -38,31 +37,50 @@ const sexLabels = {
 
 export default function StatisticsLand() {
     const [rawData, setRawData] = useState([]);
-    const [barYear, setBarYear] = useState("Todos");
-    const [barSex, setBarSex] = useState("Todos");
-    const [barCountry, setBarCountry] = useState("Todos");
 
-    const [waffleYear, setWaffleYear] = useState("Todos");
-    const [waffleContinent, setWaffleContinent] = useState("Todos");
+    // Definir estados sin "Todos", se inicializan después de cargar datos
+    const [barYear, setBarYear] = useState(null);
+    const [barSex, setBarSex] = useState(null);
+    const [barCountry, setBarCountry] = useState(null);
+
+    const [waffleYear, setWaffleYear] = useState(null);
+    const [waffleContinent, setWaffleContinent] = useState(null);
 
     useEffect(() => {
         fetch("/data/rawData.json")
             .then((res) => res.json())
-            .then((data) => setRawData(data));
+            .then((data) => {
+                setRawData(data);
+
+                // Inicializar filtros con primer valor válido
+                const years = [...new Set(data.map(d => d.year))].sort();
+                const sexes = [...new Set(data.map(d => d.sex))].sort();
+                const countries = [...new Set(data.map(d => d.country))].sort();
+                const continents = [...new Set(data.map(d => d.continent))].sort();
+
+                if (years.length > 0) {
+                    setBarYear(years[0]);
+                    setWaffleYear(years[0]);
+                }
+                if (sexes.length > 0) setBarSex(sexes[0]);
+                if (countries.length > 0) setBarCountry(countries[0]);
+                if (continents.length > 0) setWaffleContinent(continents[0]);
+            });
     }, []);
 
+    // Solo construir sets y opciones si hay datos
     const uniqueYears = [...new Set(rawData.map((d) => d.year))].sort();
     const uniqueSexes = [...new Set(rawData.map((d) => d.sex))].sort();
     const uniqueCountries = [...new Set(rawData.map((d) => d.country))].sort();
     const uniqueContinents = [...new Set(rawData.map((d) => d.continent))].sort();
 
-    // Filtrado para gráfico de barras (con país y año)
+    // Filtrado para gráfico de barras
     const filteredBarData = rawData.filter(
         (d) =>
             validIndicators.includes(d.indicator) &&
-            (barYear === "Todos" || d.year == barYear) &&
-            (barSex === "Todos" || d.sex === barSex) &&
-            (barCountry === "Todos" || d.country === barCountry)
+            d.year === barYear &&
+            d.sex === barSex &&
+            d.country === barCountry
     );
 
     const avgByIndicator = Object.entries(
@@ -82,8 +100,8 @@ export default function StatisticsLand() {
     const waffleFilteredData = rawData.filter(
         (d) =>
             validIndicators.includes(d.indicator) &&
-            (waffleContinent === "Todos" || d.continent === waffleContinent) &&
-            (waffleYear === "Todos" || d.year == waffleYear)
+            d.continent === waffleContinent &&
+            d.year === waffleYear
     );
 
     const waffleData = waffleFilteredData.reduce((acc, d) => {
@@ -122,24 +140,27 @@ export default function StatisticsLand() {
             <div className={styles.filters}>
                 <Select
                     className={styles.reactSelect}
-                    value={{ value: barCountry, label: barCountry }}
+                    value={barCountry ? { value: barCountry, label: barCountry } : null}
                     options={uniqueCountries.map((c) => ({ value: c, label: c }))}
                     onChange={(selected) => setBarCountry(selected.value)}
                     placeholder="País"
+                    isSearchable
                 />
                 <Select
                     className={styles.reactSelect}
-                    value={{ value: barYear, label: barYear }}
-                    options={[{ value: "Todos", label: "Todos" }, ...uniqueYears.map((y) => ({ value: y, label: y }))]}
+                    value={barYear ? { value: barYear, label: barYear } : null}
+                    options={uniqueYears.map((y) => ({ value: y, label: y }))}
                     onChange={(selected) => setBarYear(selected.value)}
                     placeholder="Año"
+                    isSearchable
                 />
                 <Select
                     className={styles.reactSelect}
-                    value={{ value: barSex, label: sexLabels[barSex] || barSex }}
-                    options={[{ value: "Todos", label: "Todos" }, ...uniqueSexes.map((s) => ({ value: s, label: sexLabels[s] || s }))]}
+                    value={barSex ? { value: barSex, label: sexLabels[barSex] || barSex } : null}
+                    options={uniqueSexes.map((s) => ({ value: s, label: sexLabels[s] || s }))}
                     onChange={(selected) => setBarSex(selected.value)}
                     placeholder="Sexo"
+                    isSearchable
                 />
             </div>
 
@@ -172,17 +193,19 @@ export default function StatisticsLand() {
             <div className={styles.filters}>
                 <Select
                     className={styles.reactSelect}
-                    value={{ value: waffleContinent, label: waffleContinent }}
-                    options={[{ value: "Todos", label: "Todos" }, ...uniqueContinents.map((c) => ({ value: c, label: c }))]}
+                    value={waffleContinent ? { value: waffleContinent, label: waffleContinent } : null}
+                    options={uniqueContinents.map((c) => ({ value: c, label: c }))}
                     onChange={(selected) => setWaffleContinent(selected.value)}
                     placeholder="Continente"
+                    isSearchable
                 />
                 <Select
                     className={styles.reactSelect}
-                    value={{ value: waffleYear, label: waffleYear }}
-                    options={[{ value: "Todos", label: "Todos" }, ...uniqueYears.map((y) => ({ value: y, label: y }))]}
+                    value={waffleYear ? { value: waffleYear, label: waffleYear } : null}
+                    options={uniqueYears.map((y) => ({ value: y, label: y }))}
                     onChange={(selected) => setWaffleYear(selected.value)}
                     placeholder="Año"
+                    isSearchable
                 />
             </div>
             <div style={{ height: 400 }}>
@@ -209,13 +232,9 @@ export default function StatisticsLand() {
                 />
             </div>
             <div className={styles.container}>
-                {/* ...tus otros gráficos... */}
-
                 <hr style={{ margin: '4rem 0' }} />
-
-                {/* ✅ Pasa rawData como prop al componente */}
                 <ScatterPlot rawData={rawData} />
-            </div> 
+            </div>
         </div>
     );
 }
