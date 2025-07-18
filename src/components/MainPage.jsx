@@ -6,7 +6,7 @@ import NavBar from '@/components/NavBar';
 import FilterMenu from '@/components/FilterMenu'; // Importamos el menú separado
 import RawDataTable from './RawDataTable';
 import Statistics from './Statistics';
-import StatisticsLand from "./statistics_land";
+import StatisticsLand from "./Statistics_land";
 // Cargamos el mapa de forma dinámica para evitar errores de hidratación
 const DynamicCoropletico = dynamic(
   () => import('@/components/Coropletico'),
