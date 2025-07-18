@@ -24,7 +24,14 @@ function NavBar({ setActiveTab, activeTab }) {
           onClick={() => setActiveTab('Estadísticas')}
         >
           Estadísticas
-        </button>
+              </button>
+         <button
+  className={`${styles.navLink} ${activeTab === 'Estadísticas2' ? styles.active : ''}`}
+  onClick={() => setActiveTab('Estadísticas2')}
+>
+                  Comparativa de enfermedades
+              </button>
+
         <button
           className={`${styles.navLink} ${activeTab === 'Datos Crudos' ? styles.active : ''}`}
           onClick={() => setActiveTab('Datos Crudos')}
